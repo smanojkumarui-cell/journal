@@ -70,8 +70,10 @@ export default function Layout() {
           <h1>Welcome, {user?.name}</h1>
           <div className="header-actions">
             <div className="notification-badge">
-              <button className="btn btn-ghost" onClick={() => setShowNotifications(!showNotifications)}>
-                🔔
+              <button type="button" className="btn btn-ghost notification-button" onClick={() => setShowNotifications(!showNotifications)}>
+                <svg className="notification-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 16a2 2 0 0 0 1.985-1.75H6.015A2 2 0 0 0 8 16zm6-5c0-1.098-.235-2.138-.654-3.07-.406-.9-1.014-1.617-1.73-2.121C11.657 5.562 11 4.776 11 4V3a3 3 0 0 0-6 0v1c0 .776-.657 1.562-1.616 1.809-.716.504-1.324 1.221-1.731 2.121A7.97 7.97 0 0 0 2 11c0 1.094.24 2.136.664 3.066.35.702.918 1.25 1.64 1.579.492.227 1.05.355 1.64.355h6.392c.589 0 1.147-.128 1.639-.355.722-.329 1.29-.877 1.64-1.579C13.76 13.136 14 12.094 14 11z" />
+                </svg>
               </button>
               {unreadCount > 0 && <span className="notification-count">{unreadCount}</span>}
               {showNotifications && (

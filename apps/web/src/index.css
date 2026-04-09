@@ -429,6 +429,24 @@ body {
   border-radius: var(--radius-full);
 }
 
+.notification-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-button:hover {
+  background: rgba(26, 188, 156, 0.08);
+}
+
+.notification-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .user-menu { display: flex; align-items: center; gap: 1rem; }
 
 .user-avatar {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { manuscriptApi, journalApi } from '../services/api';
 import { useStore } from '../store';
+import Dropdown from '../components/Dropdown';
 import type { Manuscript, Journal, CreateManuscriptRequest } from '../types';
 import toast from 'react-hot-toast';
 
@@ -76,15 +77,14 @@ export default function AuthorDashboard() {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">Journal *</label>
-              <select
-                className="form-select"
+              <Dropdown
                 value={formData.journalId}
-                onChange={e => setFormData({ ...formData, journalId: parseInt(e.target.value) })}
+                placeholder="Select a journal"
+                placeholderValue={0}
+                options={journals.map(j => ({ value: j.id, label: j.name }))}
+                onChange={value => setFormData({ ...formData, journalId: parseInt(value) })}
                 required
-              >
-                <option value="">Select a journal</option>
-                {journals.map(j => <option key={j.id} value={j.id}>{j.name}</option>)}
-              </select>
+              />
             </div>
             <div className="form-group">
               <label className="form-label">Title *</label>
