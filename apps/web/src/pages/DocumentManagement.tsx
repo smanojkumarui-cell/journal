@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { instructionDocumentApi } from '../services/api';
 import { useStore } from '../store';
+import Dropdown from '../components/Dropdown';
 import type { InstructionDocument, InstructionCategory, InstructionRoleType, CreateInstructionDocumentRequest } from '../types';
 import toast from 'react-hot-toast';
 
@@ -181,27 +182,27 @@ export default function DocumentManagement() {
               </div>
               <div className="form-group">
                 <label className="form-label">Category *</label>
-                <select
-                  className="form-select"
+                <Dropdown
                   value={formData.category}
-                  onChange={e => setFormData({ ...formData, category: e.target.value as InstructionCategory })}
-                >
-                  <option value="Punctuation">Punctuation</option>
-                  <option value="UKStyle">UK Style</option>
-                  <option value="USStyle">US Style</option>
-                </select>
+                  options={[
+                    { value: 'Punctuation', label: 'Punctuation' },
+                    { value: 'UKStyle', label: 'UK Style' },
+                    { value: 'USStyle', label: 'US Style' }
+                  ]}
+                  onChange={value => setFormData({ ...formData, category: value as InstructionCategory })}
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">Assign To Role *</label>
-                <select
-                  className="form-select"
+                <Dropdown
                   value={formData.roleType}
-                  onChange={e => setFormData({ ...formData, roleType: e.target.value as InstructionRoleType })}
-                >
-                  <option value="CopyEditor">Copy Editor</option>
-                  <option value="TechnicalEditor">Technical Editor</option>
-                  <option value="Both">Both (Copy Editor & Technical Editor)</option>
-                </select>
+                  options={[
+                    { value: 'CopyEditor', label: 'Copy Editor' },
+                    { value: 'TechnicalEditor', label: 'Technical Editor' },
+                    { value: 'Both', label: 'Both (Copy Editor & Technical Editor)' }
+                  ]}
+                  onChange={value => setFormData({ ...formData, roleType: value as InstructionRoleType })}
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">File * (PDF, DOCX, TXT - max 50MB)</label>

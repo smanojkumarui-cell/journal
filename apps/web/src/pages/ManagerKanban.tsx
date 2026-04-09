@@ -4,6 +4,7 @@ import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-
 import { CSS } from '@dnd-kit/utilities';
 import { useStore } from '../store';
 import { assignmentApi, authApi, manuscriptApi } from '../services/api';
+import Dropdown from '../components/Dropdown';
 import type { Assignment, KanbanBoard, User, Manuscript, TaskType, AssignmentStatus } from '../types';
 import toast from 'react-hot-toast';
 
@@ -172,26 +173,38 @@ export default function ManagerKanban() {
             <form onSubmit={handleAssign}>
               <div className="form-group">
                 <label className="form-label">Manuscript</label>
-                <select className="form-select" value={assignForm.manuscriptId} onChange={e => setAssignForm({ ...assignForm, manuscriptId: parseInt(e.target.value) })} required>
-                  <option value={0}>Select manuscript</option>
-                  {manuscripts.map(m => <option key={m.id} value={m.id}>{m.manuscriptNumber} - {m.title}</option>)}
-                </select>
+                <Dropdown
+                  value={assignForm.manuscriptId}
+                  placeholder="Select manuscript"
+                  placeholderValue={0}
+                  options={manuscripts.map(m => ({ value: m.id, label: `${m.manuscriptNumber} - ${m.title}` }))}
+                  onChange={value => setAssignForm({ ...assignForm, manuscriptId: parseInt(value) })}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">Assign To</label>
-                <select className="form-select" value={assignForm.assigneeId} onChange={e => setAssignForm({ ...assignForm, assigneeId: parseInt(e.target.value) })} required>
-                  <option value={0}>Select resource</option>
-                  {resources.map(r => <option key={r.id} value={r.id}>{r.name} ({r.specialty || r.resourceType})</option>)}
-                </select>
+                <Dropdown
+                  value={assignForm.assigneeId}
+                  placeholder="Select resource"
+                  placeholderValue={0}
+                  options={resources.map(r => ({ value: r.id, label: `${r.name} (${r.specialty || r.resourceType})` }))}
+                  onChange={value => setAssignForm({ ...assignForm, assigneeId: parseInt(value) })}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">Task Type</label>
-                <select className="form-select" value={assignForm.taskType} onChange={e => setAssignForm({ ...assignForm, taskType: e.target.value as TaskType })}>
-                  <option value="Copyediting">Copyediting</option>
-                  <option value="ProofReading">Proof Reading</option>
-                  <option value="TEReview">TE Review</option>
-                  <option value="QACheck">QA Check</option>
-                </select>
+                <Dropdown
+                  value={assignForm.taskType}
+                  options={[
+                    { value: 'Copyediting', label: 'Copyediting' },
+                    { value: 'ProofReading', label: 'Proof Reading' },
+                    { value: 'TEReview', label: 'TE Review' },
+                    { value: 'QACheck', label: 'QA Check' }
+                  ]}
+                  onChange={value => setAssignForm({ ...assignForm, taskType: value as TaskType })}
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">SLA (hours)</label>
@@ -221,12 +234,17 @@ export default function ManagerKanban() {
               </div>
               <div className="form-group">
                 <label className="form-label">Specialty</label>
-                <select className="form-select" value={freelancerForm.specialty} onChange={e => setFreelancerForm({ ...freelancerForm, specialty: e.target.value })} required>
-                  <option value="">Select specialty</option>
-                  <option value="Copyediting">Copyediting</option>
-                  <option value="ProofReading">Proof Reading</option>
-                  <option value="TEReview">TE Review</option>
-                </select>
+                <Dropdown
+                  value={freelancerForm.specialty}
+                  placeholder="Select specialty"
+                  options={[
+                    { value: 'Copyediting', label: 'Copyediting' },
+                    { value: 'ProofReading', label: 'Proof Reading' },
+                    { value: 'TEReview', label: 'TE Review' }
+                  ]}
+                  onChange={value => setFreelancerForm({ ...freelancerForm, specialty: value })}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label className="form-label">Hourly Rate ($)</label>
